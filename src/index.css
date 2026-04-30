@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-dark-900 text-white antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  a, button, input, textarea, select {
+    cursor: none;
+  }
+  
+  ::selection {
+    @apply bg-primary-500/30 text-white;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-dark-700/60 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-card {
+    @apply bg-dark-700/40 backdrop-blur-xl border border-white/5 rounded-2xl;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 via-primary-500 to-primary-300 bg-clip-text text-transparent;
+    background-size: 200% 200%;
+    animation: gradient 4s ease infinite;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white font-medium rounded-full 
+           transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25;
+  }
+  
+  .btn-outline {
+    @apply px-6 py-3 border border-white/20 text-white font-medium rounded-full 
+           transition-all duration-300 hover:bg-white/10 hover:border-white/40;
+  }
+  
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
