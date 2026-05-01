@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, ExternalLink, Loader2, Code2 } from 'lucide-react'
+import { Github, ExternalLink, Loader2, Code2, ArrowUpRight } from 'lucide-react'
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
@@ -14,7 +14,6 @@ const Projects = () => {
         if (!response.ok) throw new Error('Failed to fetch projects')
         const data = await response.json()
         
-        // Filter out forks and sort by most recently pushed
         const filteredProjects = data
           .filter(repo => !repo.fork)
           .map(repo => ({
@@ -41,37 +40,45 @@ const Projects = () => {
   }, [])
 
   const techColors = {
-    JavaScript: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    TypeScript: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    Python: 'bg-green-500/20 text-green-400 border-green-500/30',
-    HTML: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    CSS: 'bg-blue-400/20 text-blue-300 border-blue-400/30',
-    'C++': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
-    C: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
-    Java: 'bg-red-500/20 text-red-400 border-red-500/30',
-    React: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
-    'Node.js': 'bg-green-600/20 text-green-500 border-green-600/30',
-    default: 'bg-primary-500/20 text-primary-400 border-primary-500/30',
+    JavaScript: 'border-yellow-500/30 text-yellow-400 bg-yellow-500/10',
+    TypeScript: 'border-blue-500/30 text-blue-400 bg-blue-500/10',
+    Python: 'border-neon/30 text-neon bg-neon/10',
+    HTML: 'border-orange-500/30 text-orange-400 bg-orange-500/10',
+    CSS: 'border-blue-400/30 text-blue-300 bg-blue-400/10',
+    'C++': 'border-pink-500/30 text-pink-400 bg-pink-500/10',
+    C: 'border-white/20 text-white/60 bg-white/5',
+    Java: 'border-red-500/30 text-red-400 bg-red-500/10',
+    React: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
+    'Node.js': 'border-green-600/30 text-green-500 bg-green-600/10',
+    default: 'border-neon/30 text-neon bg-neon/10',
   }
 
   return (
-    <section id="projects" className="section-padding py-24 relative">
+    <section id="projects" className="section-padding py-32 relative overflow-hidden">
+      {/* Section Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/20 to-transparent" />
+
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <span className="text-primary-400 text-sm font-medium tracking-wider uppercase mb-2 block">
-            My Work
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Featured Projects
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px flex-1 bg-gradient-to-r from-neon/50 to-transparent" />
+            <span className="text-neon text-sm font-mono tracking-widest uppercase">
+              02 — Projects
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight mb-4">
+            Featured <span className="text-neon">Work</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            A selection of projects I've built. Each one represents a unique learning experience.
+          <p className="text-white/50 max-w-xl">
+            A curated selection of projects showcasing my technical capabilities 
+            and problem-solving approach.
           </p>
         </motion.div>
 
@@ -84,7 +91,13 @@ const Projects = () => {
               exit={{ opacity: 0 }}
               className="flex items-center justify-center py-20"
             >
-              <Loader2 className="w-8 h-8 text-primary-400 animate-spin" />
+              <div className="relative">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="w-12 h-12 rounded-full border-2 border-neon/20 border-t-neon"
+                />
+              </div>
             </motion.div>
           ) : error || projects.length === 0 ? (
             <motion.div
@@ -92,22 +105,23 @@ const Projects = () => {
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
-              <div className="glass-card p-8 max-w-xl mx-auto">
-                <Code2 className="w-12 h-12 text-primary-400 mx-auto mb-4" />
+              <div className="glass-card p-8 max-w-xl mx-auto light-reflection">
+                <Code2 className="w-12 h-12 text-neon/60 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white mb-2">
                   Projects Under Development
                 </h3>
-                <p className="text-gray-400">
+                <p className="text-white/50">
                   Projects are currently under active development — building, refining, and shipping continuously.
                 </p>
                 <a
                   href="https://github.com/mathewsimon7"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mt-6 text-primary-400 hover:text-primary-300 transition-colors"
+                  className="inline-flex items-center gap-2 mt-6 text-neon hover:text-white transition-colors group"
                 >
                   <Github size={18} />
                   View GitHub Profile
+                  <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
               </div>
             </motion.div>
@@ -118,66 +132,7 @@ const Projects = () => {
               className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {projects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="group relative"
-                >
-                  <div className="glass-card p-6 h-full flex flex-col relative overflow-hidden">
-                    {/* Glow Effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-indigo-500/10" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10 flex-1">
-                      <div className="flex items-start justify-between mb-4">
-                        <h3 className="text-xl font-semibold text-white group-hover:text-primary-400 transition-colors">
-                          {project.name}
-                        </h3>
-                        <motion.a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 text-gray-400 hover:text-white transition-colors"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Github size={20} />
-                        </motion.a>
-                      </div>
-
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                        {project.description}
-                      </p>
-
-                      {project.language && (
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs border ${
-                          techColors[project.language] || techColors.default
-                        }`}>
-                          {project.language}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="relative z-10 mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-gray-500">
-                      <span>Updated {project.updatedAt}</span>
-                      <div className="flex items-center gap-3">
-                        {project.stars > 0 && (
-                          <span className="flex items-center gap-1">
-                            <Github size={12} />
-                            {project.stars}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+                <TiltCard key={project.id} project={project} index={index} />
               ))}
             </motion.div>
           )}
@@ -189,24 +144,146 @@ const Projects = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-16"
           >
             <motion.a
               href="https://github.com/mathewsimon7"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 rounded-full text-white hover:bg-white/10 transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/10 text-white/70 hover:text-neon hover:border-neon/30 hover:bg-neon/5 transition-all group"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <Github size={18} />
-              View All Projects on GitHub
-              <ExternalLink size={14} />
+              View All Projects
+              <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </motion.a>
           </motion.div>
         )}
       </div>
     </section>
+  )
+}
+
+// 3D Tilt Card Component
+const TiltCard = ({ project, index }) => {
+  const cardRef = useRef(null)
+  const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0, glare: { x: 50, y: 50 } })
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    
+    const rotateX = ((y - centerY) / centerY) * -10
+    const rotateY = ((x - centerX) / centerX) * 10
+    
+    setTransform({
+      rotateX,
+      rotateY,
+      glare: { x: (x / rect.width) * 100, y: (y / rect.height) * 100 }
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setTransform({ rotateX: 0, rotateY: 0, glare: { x: 50, y: 50 } })
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="glass-card p-6 h-full flex flex-col relative overflow-hidden cursor-default group"
+        style={{
+          transform: `perspective(1000px) rotateX(${transform.rotateX}deg) rotateY(${transform.rotateY}deg)`,
+          transition: 'transform 0.1s ease-out',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Dynamic Glare Effect */}
+        <div 
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at ${transform.glare.x}% ${transform.glare.y}%, rgba(0, 255, 136, 0.15) 0%, transparent 60%)`,
+          }}
+        />
+
+        {/* Border Glow */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"
+          style={{
+            boxShadow: 'inset 0 0 30px rgba(0, 255, 136, 0.1)',
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 flex-1" style={{ transform: 'translateZ(30px)' }}>
+          <div className="flex items-start justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white group-hover:text-neon transition-colors">
+              {project.name}
+            </h3>
+            <motion.a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-white/30 hover:text-neon transition-colors rounded-lg hover:bg-neon/10"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Github size={18} />
+            </motion.a>
+          </div>
+
+          <p className="text-white/40 text-sm mb-4 line-clamp-2 leading-relaxed">
+            {project.description}
+          </p>
+
+          {project.language && (
+            <span className={`inline-block px-3 py-1 rounded-full text-xs border ${
+              (() => {
+                const techColors = {
+                  JavaScript: 'border-yellow-500/30 text-yellow-400 bg-yellow-500/10',
+                  TypeScript: 'border-blue-500/30 text-blue-400 bg-blue-500/10',
+                  Python: 'border-neon/30 text-neon bg-neon/10',
+                  HTML: 'border-orange-500/30 text-orange-400 bg-orange-500/10',
+                  CSS: 'border-blue-400/30 text-blue-300 bg-blue-400/10',
+                  'C++': 'border-pink-500/30 text-pink-400 bg-pink-500/10',
+                  C: 'border-white/20 text-white/60 bg-white/5',
+                  Java: 'border-red-500/30 text-red-400 bg-red-500/10',
+                  React: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
+                  'Node.js': 'border-green-600/30 text-green-500 bg-green-600/10',
+                  default: 'border-neon/30 text-neon bg-neon/10',
+                }
+                return techColors[project.language] || techColors.default
+              })()
+            }`}>
+              {project.language}
+            </span>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="relative z-10 mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-white/30">
+          <span>{project.updatedAt}</span>
+          {project.stars > 0 && (
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-neon" />
+              {project.stars}
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.div>
   )
 }
 

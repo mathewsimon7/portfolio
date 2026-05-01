@@ -1,83 +1,58 @@
 import { motion } from 'framer-motion'
 
 const Skills = () => {
-  const skillCategories = [
-    {
-      title: 'Languages',
-      skills: ['C', 'Python', 'JavaScript'],
-    },
-    {
-      title: 'Technologies',
-      skills: ['HTML5', 'CSS3', 'React', 'Node.js', 'Express.js'],
-    },
-    {
-      title: 'Tools',
-      skills: ['Git', 'GitHub', 'Linux', 'VS Code'],
-    },
-  ]
-
-  const techColors = [
-    'from-blue-500 to-cyan-500',
-    'from-green-500 to-emerald-500',
-    'from-yellow-500 to-orange-500',
-    'from-purple-500 to-pink-500',
-    'from-red-500 to-rose-500',
-    'from-indigo-500 to-violet-500',
-    'from-cyan-500 to-teal-500',
-    'from-amber-500 to-orange-500',
+  const categories = [
+    { title: 'Core', skills: ['C', 'Python', 'JavaScript'] },
+    { title: 'Stack', skills: ['React', 'Node.js', 'Express.js', 'SQL'] },
+    { title: 'Tools', skills: ['Git', 'GitHub', 'Linux', 'VS Code', 'Docker'] },
   ]
 
   return (
-    <section id="skills" className="section-padding py-24 relative">
-      <div className="max-w-4xl mx-auto">
+    <section id="skills" className="section-padding py-32 relative">
+      {/* Section Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/20 to-transparent" />
+
+      <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary-400 text-sm font-medium tracking-wider uppercase mb-2 block">
-            Expertise
+          <span className="text-neon text-sm font-mono tracking-widest uppercase mb-4 block">
+            03 — Skills
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Skills & Technologies
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            Tech <span className="text-neon">Stack</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Technologies and tools I work with to bring ideas to life
-          </p>
         </motion.div>
 
-        {/* Skills Grid - Clean & Simple */}
+        {/* Glass Box Grid */}
         <div className="grid md:grid-cols-3 gap-6">
-          {skillCategories.map((category, categoryIndex) => (
+          {categories.map((category, catIndex) => (
             <motion.div
               key={category.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: categoryIndex * 0.1 }}
-              className="glass-card p-6"
+              transition={{ delay: catIndex * 0.15 }}
+              whileHover={{ y: -8 }}
+              className="glass-card p-8 light-reflection group cursor-default"
             >
-              <h3 className="text-lg font-semibold text-white mb-4 pb-3 border-b border-white/10">
+              <span className="text-xs text-neon/60 uppercase tracking-widest mb-6 block">
                 {category.title}
-              </h3>
-
-              <div className="flex flex-wrap gap-2">
+              </span>
+              <div className="flex flex-wrap gap-3">
                 {category.skills.map((skill, skillIndex) => (
                   <motion.span
                     key={skill}
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.03 }}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      y: -2,
-                    }}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r ${
-                      techColors[(categoryIndex * 3 + skillIndex) % techColors.length]
-                    } bg-opacity-10 text-white border border-white/10 hover:border-white/20 transition-all cursor-default`}
+                    transition={{ delay: catIndex * 0.15 + skillIndex * 0.05 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-sm text-white/70 group-hover:border-neon/20 group-hover:text-neon transition-all"
                   >
                     {skill}
                   </motion.span>

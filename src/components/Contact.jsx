@@ -10,6 +10,7 @@ const Contact = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [focusedField, setFocusedField] = useState(null)
 
   const contactLinks = [
     {
@@ -17,28 +18,24 @@ const Contact = () => {
       label: 'Email',
       value: 'mathewsimon2006@gmail.com',
       href: 'mailto:mathewsimon2006@gmail.com',
-      color: 'from-red-500 to-orange-500',
     },
     {
       icon: Linkedin,
       label: 'LinkedIn',
       value: 'Connect on LinkedIn',
       href: 'https://www.linkedin.com/in/mathew-simon-612b8b3b1/',
-      color: 'from-blue-500 to-blue-600',
     },
     {
       icon: Github,
       label: 'GitHub',
       value: 'View Projects',
       href: 'https://github.com/mathewsimon7',
-      color: 'from-gray-600 to-gray-700',
     },
     {
       icon: Instagram,
       label: 'Instagram',
       value: '@mathew_.simon',
       href: 'https://www.instagram.com/mathew_.simon/?hl=en',
-      color: 'from-pink-500 to-purple-500',
     },
   ]
 
@@ -46,7 +43,6 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1500))
     
     setIsSubmitting(false)
@@ -57,33 +53,41 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="section-padding py-24 relative">
+    <section id="contact" className="section-padding py-32 relative overflow-hidden">
+      {/* Section Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/20 to-transparent" />
+
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <span className="text-primary-400 text-sm font-medium tracking-wider uppercase mb-2 block">
-            Get In Touch
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Let's Connect
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px flex-1 bg-gradient-to-r from-neon/50 to-transparent" />
+            <span className="text-neon text-sm font-mono tracking-widest uppercase">
+              05 — Contact
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight mb-4">
+            Let's <span className="text-neon">Connect</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Feel free to reach out!
+          <p className="text-white/50 max-w-xl">
+            Have a project in mind or want to collaborate? Reach out and let's build something together.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Links */}
+        <div className="grid lg:grid-cols-5 gap-12">
+          {/* Contact Links - Left Side */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-4"
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-2 space-y-4"
           >
             {contactLinks.map((link, index) => (
               <motion.a
@@ -95,93 +99,143 @@ const Contact = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, x: 8 }}
+                whileHover={{ x: 8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group flex items-center gap-4 p-4 rounded-xl glass-card hover:border-primary-500/30 transition-colors"
+                className="group flex items-center gap-4 p-4 rounded-xl glass-card light-reflection cursor-default"
               >
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${link.color} text-white shadow-lg`}>
+                <div className="p-3 rounded-lg bg-neon/10 text-neon group-hover:bg-neon/20 transition-colors">
                   <link.icon size={20} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-white font-medium">{link.label}</h3>
-                  <p className="text-gray-400 text-sm">{link.value}</p>
+                  <h3 className="text-white font-medium text-sm">{link.label}</h3>
+                  <p className="text-white/40 text-xs">{link.value}</p>
                 </div>
                 <ArrowUpRight 
-                  size={20} 
-                  className="text-gray-500 group-hover:text-primary-400 transition-colors" 
+                  size={18} 
+                  className="text-white/20 group-hover:text-neon transition-colors" 
                 />
               </motion.a>
             ))}
+
+            {/* Direct Email Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="p-6 rounded-xl glass-card mt-8"
+            >
+              <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Direct Email</p>
+              <a 
+                href="mailto:mathewsimon2006@gmail.com"
+                className="text-neon hover:text-white transition-colors font-mono text-sm"
+              >
+                mathewsimon2006@gmail.com
+              </a>
+            </motion.div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Contact Form - Right Side */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="glass-card p-6 md:p-8">
-              <h3 className="text-xl font-semibold text-white mb-6">
+            <form onSubmit={handleSubmit} className="glass-card p-8">
+              <h3 className="text-lg font-medium text-white mb-8">
                 Send a Message
               </h3>
 
-              <div className="space-y-5">
+              <div className="space-y-6">
+                {/* Name Field */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                 >
-                  <label className="block text-sm text-gray-400 mb-2">
+                  <label className="block text-xs text-white/40 uppercase tracking-wider mb-2">
                     Your Name
                   </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-dark-600/50 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500/50 focus:ring-1 focus:ring-primary-500/50 transition-all"
-                    placeholder="John Doe"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onFocus={() => setFocusedField('name')}
+                      onBlur={() => setFocusedField(null)}
+                      className="w-full px-4 py-3 rounded-xl bg-void-800/50 border border-neon/10 text-white placeholder-white/20 focus:outline-none focus:border-neon/40 transition-all"
+                      placeholder="John Doe"
+                      required
+                    />
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: focusedField === 'name' ? 1 : 0 }}
+                      className="absolute bottom-0 left-0 right-0 h-px bg-neon origin-left"
+                    />
+                  </div>
                 </motion.div>
 
+                {/* Email Field */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
                 >
-                  <label className="block text-sm text-gray-400 mb-2">
+                  <label className="block text-xs text-white/40 uppercase tracking-wider mb-2">
                     Your Email
                   </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-dark-600/50 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500/50 focus:ring-1 focus:ring-primary-500/50 transition-all"
-                    placeholder="john@example.com"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onFocus={() => setFocusedField('email')}
+                      onBlur={() => setFocusedField(null)}
+                      className="w-full px-4 py-3 rounded-xl bg-void-800/50 border border-neon/10 text-white placeholder-white/20 focus:outline-none focus:border-neon/40 transition-all"
+                      placeholder="john@example.com"
+                      required
+                    />
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: focusedField === 'email' ? 1 : 0 }}
+                      className="absolute bottom-0 left-0 right-0 h-px bg-neon origin-left"
+                    />
+                  </div>
                 </motion.div>
 
+                {/* Message Field */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <label className="block text-sm text-gray-400 mb-2">
+                  <label className="block text-xs text-white/40 uppercase tracking-wider mb-2">
                     Message
                   </label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-dark-600/50 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500/50 focus:ring-1 focus:ring-primary-500/50 transition-all resize-none"
-                    placeholder="Hi Mathew, I'd like to discuss..."
-                    required
-                  />
+                  <div className="relative">
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onFocus={() => setFocusedField('message')}
+                      onBlur={() => setFocusedField(null)}
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-xl bg-void-800/50 border border-neon/10 text-white placeholder-white/20 focus:outline-none focus:border-neon/40 transition-all resize-none"
+                      placeholder="Hi Mathew, I'd like to discuss..."
+                      required
+                    />
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: focusedField === 'message' ? 1 : 0 }}
+                      className="absolute bottom-0 left-0 right-0 h-px bg-neon origin-left"
+                    />
+                  </div>
                 </motion.div>
 
+                {/* Submit Button */}
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
@@ -193,10 +247,10 @@ const Contact = () => {
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                      className="w-5 h-5 border-2 border-neon border-t-transparent rounded-full"
                     />
                   ) : submitted ? (
-                    <span>Message Sent!</span>
+                    <span className="text-neon">Message Sent Successfully!</span>
                   ) : (
                     <>
                       <Send size={18} />

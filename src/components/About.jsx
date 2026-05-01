@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
-import { Shield, Code, Terminal } from 'lucide-react'
+import { Shield, Code, Terminal, Cpu, Lock, Zap } from 'lucide-react'
 
 const About = () => {
   const features = [
     {
       icon: Shield,
       title: 'Cybersecurity',
-      description: 'Passionate about security practices and protecting digital assets',
+      description: 'Security-first mindset with focus on protecting digital assets',
     },
     {
       icon: Code,
@@ -16,57 +16,92 @@ const About = () => {
     {
       icon: Terminal,
       title: 'Problem Solving',
-      description: 'Continuously improving skills through hands-on challenges',
+      description: 'Breaking down complex challenges into elegant solutions',
     },
   ]
 
+  const highlights = [
+    { icon: Cpu, label: 'System Architecture' },
+    { icon: Lock, label: 'Security Analysis' },
+    { icon: Zap, label: 'Performance' },
+  ]
+
   return (
-    <section id="about" className="section-padding py-24 relative">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" className="section-padding py-32 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 right-0 w-px h-64 bg-gradient-to-b from-transparent via-neon/20 to-transparent" />
+        <div className="absolute bottom-1/4 left-0 w-px h-64 bg-gradient-to-b from-transparent via-neon/10 to-transparent" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <span className="text-primary-400 text-sm font-medium tracking-wider uppercase mb-2 block">
-            About Me
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            Who I Am
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px flex-1 bg-gradient-to-r from-neon/50 to-transparent" />
+            <span className="text-neon text-sm font-mono tracking-widest uppercase">
+              01 — About
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
+            Who I <span className="text-neon">Am</span>
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
+          {/* Main Content - Left */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-3 space-y-6"
           >
-            <div className="glass-card p-8">
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Pursuing BTech in Computer Science with a focus on cybersecurity. 
-                Interested in building practical applications and continuously 
-                improving problem-solving skills through hands-on development.
+            <div className="glass-card p-8 light-reflection">
+              <p className="text-white/80 text-lg leading-relaxed mb-6">
+                Pursuing BTech in Computer Science with a specialized focus on{' '}
+                <span className="text-neon">cybersecurity</span>. I combine technical 
+                expertise with a passion for building practical applications that solve 
+                real-world problems.
               </p>
-              <p className="text-gray-400 leading-relaxed">
-                I believe in the power of technology to solve real-world problems. 
-                Whether it's securing systems or building user-friendly applications, 
-                I'm always eager to learn and apply new concepts to create meaningful impact.
+              <p className="text-white/50 leading-relaxed">
+                My approach centers on continuous improvement through hands-on development. 
+                Whether securing systems against threats or crafting user-friendly interfaces, 
+                I'm driven by the challenge of transforming complexity into clarity.
               </p>
+            </div>
+
+            {/* Highlights */}
+            <div className="flex flex-wrap gap-4">
+              {highlights.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full border border-neon/20 bg-neon/5"
+                >
+                  <item.icon size={14} className="text-neon" />
+                  <span className="text-sm text-white/70">{item.label}</span>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Features Grid */}
+          {/* Features Cards - Right */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid gap-6"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:col-span-2 space-y-4"
           >
             {features.map((feature, index) => (
               <motion.div
@@ -74,16 +109,16 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, x: 5 }}
-                className="glass-card p-6 flex items-start gap-4 group cursor-default"
+                transition={{ delay: 0.3 + index * 0.1 }}
+                whileHover={{ x: 8, scale: 1.02 }}
+                className="glass-card p-5 flex items-start gap-4 group cursor-default light-reflection"
               >
-                <div className="p-3 rounded-xl bg-primary-500/10 text-primary-400 group-hover:bg-primary-500/20 transition-colors">
-                  <feature.icon size={24} />
+                <div className="p-2.5 rounded-lg bg-neon/10 text-neon group-hover:bg-neon/20 transition-colors">
+                  <feature.icon size={20} />
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold mb-1">{feature.title}</h3>
-                  <p className="text-gray-400 text-sm">{feature.description}</p>
+                  <h3 className="text-white font-medium mb-1 text-sm">{feature.title}</h3>
+                  <p className="text-white/40 text-xs leading-relaxed">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
